@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="card card-login mx-auto mt-5">
+        <div class="card-header">Add Expense</div>
+        <div class="card-body">
+            <form #formExpense="ngForm" (submit)="AddExpense(formExpense)">
+                <div class="alert alert-info" *ngIf="formSubmitted">
+                    <i class="fa fa-info"></i> {{message}}
+                </div>
+
+                <div class="input-group">
+                    <div class="form-label-group">
+                        <input type="number" id="inputExpense" name="expense" class="form-control" [(ngModel)]="expense.expense" placeholder="Expense Value" required="required" autofocus="autofocus">
+                        <label for="inputExpense">Expense Value</label>
+                    </div>
+                    <!--  <input type="text" class="form-control" aria-label="Text input" />-->
+                    <div class="input-group-append">
+                        <button type="button" id="currency" class="btn btn-outline-secondary">{{currency}}</button>
+                        <button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span class="sr-only"> Toggle Dropdown</span>
+                    </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" style="cursor: pointer;" (click)="ChangeCurrency('PUD')">PUD</a>
+                            <a class="dropdown-item" style="cursor: pointer;" (click)="ChangeCurrency('EUR')">EUR</a>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="number" disabled="true" name="vat" id="inputVAT" [value]="expense.expense*0.2" class="form-control" placeholder="VAT" required="required">
+                        <label for="inputVAT">VAT</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="text" id="inputReason" name="reason" class="form-control" [(ngModel)]="expense.reason" placeholder="Expense Reason" required="required">
+                        <label for="inputReason">Expense Reason</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-label-group">
+                        <input type="date" id="inputDate" name="date" class="form-control" [(ngModel)]="expense.date" placeholder="Date" required="required">
+                        <label for="inputDate">Expense Date</label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" href="#">Add Expense</button>
+            </form>
+        </div>
+    </div>
+</div>
