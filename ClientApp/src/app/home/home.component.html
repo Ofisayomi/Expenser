@@ -3,7 +3,7 @@
         <div class="card-header">Add Expense</div>
         <div class="card-body">
             <form #formExpense="ngForm" (submit)="AddExpense(formExpense)">
-                <div class="alert alert-info" *ngIf="formSubmitted">
+                <div class="alert {{alertclass}}" *ngIf="formSubmitted">
                     <i class="fa fa-info"></i> {{message}}
                 </div>
 

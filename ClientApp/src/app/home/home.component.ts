@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { ExpenseModel } from '../model/expense.model';
 import { NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ResponseType, ResponseContentType } from '@angular/http';
 
 
 @Component({
@@ -12,6 +13,7 @@ export class HomeComponent {
   public currency = 'PUD';
   public expense: ExpenseModel = new ExpenseModel();
   public message: string;
+  alertclass: string;
   public formSubmitted: boolean;
   _baseUrl: string;
   constructor(public http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
@@ -20,18 +22,22 @@ export class HomeComponent {
 
   public AddExpense(ExpenseData: NgForm) {
     if(ExpenseData.valid) {
-      console.log(this.expense);
       this.expense.currency = this.currency;
       this.formSubmitted = true;
-      this.http.post(this._baseUrl + 'api/ClientsData/AddExpense', this.expense).subscribe(res => {
-        this.message = JSON.stringify(res);
-        console.log(res);
+      this.http.post(this._baseUrl + 'api/ClientsData/AddExpense', this.expense, { responseType: 'text'}).subscribe(res => {
+        this.message = res;
+        this.alertclass = 'alert-info';
       }, error => {
-        console.log(error);
+        this.message = error.error.text || error.error;
+        this.alertclass = 'alert-danger';
       });
     } else {
-      this.message ='Required fields not supplied';
+      this.message = 'Required fields not supplied';
+      this.alertclass = 'alert-danger';
     }
+
+    this.expense.expense = 0;
+    this.expense.reason = '';
   }
 
   public ChangeCurrency(currencies: string):string {
